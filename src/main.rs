@@ -7,6 +7,7 @@ enum Message {
     Move { x: i32, y: i32 },
     Write(String),
     ChangeColor(i32, i32, i32),
+    Hello { id: i32 },
 }
 fn main() {
     // 1. 匹配字面量 --- 希望匹配具体的可知的值
@@ -41,5 +42,21 @@ fn main() {
         Message::Move { x, y } => println!("x is {},y is {}", x, y),
         Message::Write(text) => println!("text is {}", text),
         Message::ChangeColor(a, b, c) => println!("a is {},b is {},c is {}", a, b, c), // a is 1,b is 2,c is 3
+        _ => (),
+    }
+    // 匹配守卫（match guard）是一个位于 match 分支模式之后的额外 if 条件，它能为分支模式提供更进一步的匹配条件。
+    let num = Some(4);
+    match num {
+        Some(x) if x < 5 => println!("less than five: {}", x),
+        Some(x) => println!("{}", x),
+        None => (),
+    }
+    // 关于@绑定 @（读作 at）运算符允许为一个字段绑定另外一个变量。 需要注意@和｜一起使用时需要绑定到全模式
+    let message = Message::Hello { id: 6 };
+    match message {
+        Message::Hello {
+            id: id @ (6 | 1..=5),
+        } => println!("id is {}", id), // id is 6
+        _ => (),
     }
 }
