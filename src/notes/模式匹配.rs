@@ -24,6 +24,11 @@ fn main() {
     about_if_let();
     about_matches();
     about_cover();
+    let x = Some(4);
+    let y = about_option(x);
+    let none = about_option(None);
+    println!("{:?}", y); // Some(5)
+    println!("{:?}", none); // None
 }
 
 /**
@@ -95,4 +100,14 @@ fn about_cover() {
         println!("age is {}", age) // 30
     }
     println!("age is {:?}", age); // Some(30)
+}
+
+/*
+一个变量要么有值：Some(T), 要么为空：None。
+*/
+fn about_option(x: Option<i32>) -> Option<i32> {
+    match x {
+        None => None,
+        Some(i) => Some(i + 1),
+    }
 }
